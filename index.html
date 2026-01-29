@@ -24,33 +24,35 @@
         }
 
         /* --- 1:1 标题比例优化 --- */
-        .header { margin-top: 50px; text-align: center; }
+        .header { margin-top: 50px; text-align: center; padding: 0 20px; }
         .header h1 {
-            font-size: 64px; margin: 0; color: white;
+            font-size: clamp(24px, 8vw, 64px); margin: 0; color: white;
             /* 极细致的多层投影模拟像素勾边 */
             text-shadow: 
                 -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
                 0px 10px 0px #8a4a2a; 
             letter-spacing: -2px;
+            line-height: 1.2;
         }
 
         /* --- 领奖台重构 --- */
         .podium-section {
             display: flex; align-items: flex-end; justify-content: center;
-            width: 100%; height: 420px; margin-top: 30px;
+            width: 100%; height: auto; min-height: 320px; margin-top: 30px;
+            padding: 0 15px; box-sizing: border-box;
         }
 
         .podium-item {
             display: flex; flex-direction: column; align-items: center;
-            width: 130px; margin: 0 10px; position: relative;
+            width: clamp(100px, 25vw, 130px); margin: 0 5px; position: relative;
         }
 
         /* 顶部黑圈 */
         .rank-top-badge {
-            width: 45px; height: 45px; background: #000;
+            width: clamp(35px, 8vw, 45px); height: clamp(35px, 8vw, 45px); background: #000;
             border: 4px solid var(--gold); border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
-            font-family: 'Press+Start+2P', cursive; font-size: 16px; color: white;
+            font-family: 'Press+Start+2P', cursive; font-size: clamp(12px, 3vw, 16px); color: white;
             margin-bottom: -15px; z-index: 10;
             box-shadow: 0 4px 0 rgba(0,0,0,0.3);
         }
@@ -58,14 +60,14 @@
         /* 白色信息卡片比例优化 */
         .info-card {
             background: #fff; border: 4px solid #000; border-radius: 6px;
-            width: 110px; padding: 12px 5px; text-align: center;
+            width: clamp(90px, 22vw, 110px); padding: 12px 5px; text-align: center;
             box-shadow: 6px 6px 0px rgba(0,0,0,0.15); z-index: 5;
             position: relative;
         }
-        .info-card .num-label { font-size: 24px; font-weight: 900; color: var(--brick-main); display: block; }
-        .info-card .rank-tag { font-size: 10px; color: #666; font-weight: bold; text-transform: uppercase; }
-        .info-card .item-icon { font-size: 22px; margin: 6px 0; }
-        .info-card .group-name { font-size: 13px; font-weight: bold; color: #000; word-wrap: break-word; }
+        .info-card .num-label { font-size: clamp(18px, 4vw, 24px); font-weight: 900; color: var(--brick-main); display: block; }
+        .info-card .rank-tag { font-size: clamp(8px, 2vw, 10px); color: #666; font-weight: bold; text-transform: uppercase; }
+        .info-card .item-icon { font-size: clamp(16px, 4vw, 22px); margin: 6px 0; }
+        .info-card .group-name { font-size: clamp(10px, 2.5vw, 13px); font-weight: bold; color: #000; word-wrap: break-word; }
 
         /* 极致细节砖块 */
         .brick-pillar {
@@ -79,9 +81,9 @@
             content: ''; width: 80%; height: 4px; background: rgba(255,255,255,0.1); position: absolute; top: 10px;
         }
 
-        .rank-1 .brick-pillar { height: 180px; z-index: 3; }
-        .rank-2 .brick-pillar { height: 135px; z-index: 2; }
-        .rank-3 .brick-pillar { height: 100px; z-index: 1; }
+        .rank-1 .brick-pillar { height: clamp(120px, 25vw, 180px); z-index: 3; }
+        .rank-2 .brick-pillar { height: clamp(90px, 20vw, 135px); z-index: 2; }
+        .rank-3 .brick-pillar { height: clamp(70px, 15vw, 100px); z-index: 1; }
 
         /* --- 列表彩虹边框优化 --- */
         .list-container {
@@ -97,20 +99,21 @@
 
         .row-entry {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 25px; border-bottom: 3px solid #f8f8f8;
-            font-size: 22px; font-weight: bold; color: #333;
+            padding: clamp(12px, 3vw, 18px) clamp(15px, 4vw, 25px); border-bottom: 3px solid #f8f8f8;
+            font-size: clamp(14px, 3vw, 22px); font-weight: bold; color: #333;
+            flex-wrap: wrap; gap: 10px;
         }
         .row-entry:last-child { border-bottom: none; }
         .row-entry .val-score { color: var(--grass-green); }
 
         /* 环境背景 */
-        .mario-cloud { position: fixed; background: #fff; width: 90px; height: 35px; border-radius: 20px; z-index: -1; animation: clouds 45s linear infinite; }
-        .mario-cloud::before { content:''; position:absolute; background:#fff; width:45px; height:45px; top:-20px; left:15px; border-radius:50%; }
+        .mario-cloud { position: fixed; background: #fff; width: clamp(60px, 12vw, 90px); height: clamp(25px, 5vw, 35px); border-radius: 20px; z-index: -1; animation: clouds 45s linear infinite; }
+        .mario-cloud::before { content:''; position:absolute; background:#fff; width: clamp(30px, 6vw, 45px); height: clamp(30px, 6vw, 45px); top: clamp(-15px, -3vw, -20px); left:15px; border-radius:50%; }
         @keyframes clouds { from { left: -150px; } to { left: 110%; } }
 
-        .mario-ground { position: fixed; bottom: 0; width: 100%; height: 60px; background: var(--grass-green); border-top: 6px solid #4d6621; z-index: 20; }
-        .mario-dirt { position: absolute; bottom: 0; width: 100%; height: 40px; background: var(--dirt-brown); background-image: radial-gradient(#000 10%, transparent 10%); background-size: 15px 15px; }
-        .mario-pipe { position: fixed; bottom: 60px; left: 30px; width: 55px; height: 50px; background: #73C316; border: 5px solid #000; z-index: 15; }
+        .mario-ground { position: fixed; bottom: 0; width: 100%; height: clamp(40px, 8vw, 60px); background: var(--grass-green); border-top: 6px solid #4d6621; z-index: 20; }
+        .mario-dirt { position: absolute; bottom: 0; width: 100%; height: clamp(25px, 5vw, 40px); background: var(--dirt-brown); background-image: radial-gradient(#000 10%, transparent 10%); background-size: 15px 15px; }
+        .mario-pipe { position: fixed; bottom: clamp(40px, 8vw, 60px); left: clamp(15px, 3vw, 30px); width: clamp(40px, 8vw, 55px); height: clamp(35px, 7vw, 50px); background: #73C316; border: 5px solid #000; z-index: 15; }
     </style>
 </head>
 <body>
