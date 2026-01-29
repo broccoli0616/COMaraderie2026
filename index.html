@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>COMaraderie '26 Leaderboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sky-blue: #5C94FC;
+            --brick-main: #E75926;
+            --brick-light: #f08050;
+            --brick-dark: #8a2e00;
+            --grass-green: #709132;
+            --gold: #F7D010;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--sky-blue);
+            font-family: Arial, sans-serif;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh; overflow-x: hidden;
+        }
+
+        /* --- 1:1 标题比例优化 --- */
+        .header { margin-top: 50px; text-align: center; }
+        .header h1 {
+            font-size: 64px; margin: 0; color: white;
+            /* 极细致的多层投影模拟像素勾边 */
+            text-shadow: 
+                -4px -4px 0 #000, 4px -4px 0 #000, -4px 4px 0 #000, 4px 4px 0 #000,
+                0px 10px 0px #8a4a2a; 
+            letter-spacing: -2px;
+        }
+
+        /* --- 领奖台重构 --- */
+        .podium-section {
+            display: flex; align-items: flex-end; justify-content: center;
+            width: 100%; height: 420px; margin-top: 30px;
+        }
+
+        .podium-item {
+            display: flex; flex-direction: column; align-items: center;
+            width: 130px; margin: 0 10px; position: relative;
+        }
+
+        /* 顶部黑圈 */
+        .rank-top-badge {
+            width: 45px; height: 45px; background: #000;
+            border: 4px solid var(--gold); border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-family: 'Press+Start+2P', cursive; font-size: 16px; color: white;
+            margin-bottom: -15px; z-index: 10;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+        }
+
+        /* 白色信息卡片比例优化 */
+        .info-card {
+            background: #fff; border: 4px solid #000; border-radius: 6px;
+            width: 110px; padding: 12px 5px; text-align: center;
+            box-shadow: 6px 6px 0px rgba(0,0,0,0.15); z-index: 5;
+            position: relative;
+        }
+        .info-card .num-label { font-size: 24px; font-weight: 900; color: var(--brick-main); display: block; }
+        .info-card .rank-tag { font-size: 10px; color: #666; font-weight: bold; text-transform: uppercase; }
+        .info-card .item-icon { font-size: 22px; margin: 6px 0; }
+        .info-card .group-name { font-size: 13px; font-weight: bold; color: #000; word-wrap: break-word; }
+
+        /* 极致细节砖块 */
+        .brick-pillar {
+            width: 100%; background: var(--brick-main);
+            border: 4px solid #000;
+            border-top: 10px solid var(--brick-light); /* 顶部亮边 */
+            box-shadow: inset -8px -8px 0px var(--brick-dark); /* 侧面深色 */
+            display: flex; justify-content: center; align-items: center;
+        }
+        .brick-pillar::after {
+            content: ''; width: 80%; height: 4px; background: rgba(255,255,255,0.1); position: absolute; top: 10px;
+        }
+
+        .rank-1 .brick-pillar { height: 180px; z-index: 3; }
+        .rank-2 .brick-pillar { height: 135px; z-index: 2; }
+        .rank-3 .brick-pillar { height: 100px; z-index: 1; }
+
+        /* --- 列表彩虹边框优化 --- */
+        .list-container {
+            width: 92%; max-width: 580px; margin: 40px 0 120px 0;
+            padding: 8px; border-radius: 28px;
+            background: linear-gradient(135deg, #ff4e50, #f9d423, #4ecca3, #4568dc, #b06ab3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .list-inner-body {
+            background: white; border-radius: 22px; padding: 10px;
+        }
+
+        .row-entry {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 18px 25px; border-bottom: 3px solid #f8f8f8;
+            font-size: 22px; font-weight: bold; color: #333;
+        }
+        .row-entry:last-child { border-bottom: none; }
+        .row-entry .val-score { color: var(--grass-green); }
+
+        /* 环境背景 */
+        .mario-cloud { position: fixed; background: #fff; width: 90px; height: 35px; border-radius: 20px; z-index: -1; animation: clouds 45s linear infinite; }
+        .mario-cloud::before { content:''; position:absolute; background:#fff; width:45px; height:45px; top:-20px; left:15px; border-radius:50%; }
+        @keyframes clouds { from { left: -150px; } to { left: 110%; } }
+
+        .mario-ground { position: fixed; bottom: 0; width: 100%; height: 60px; background: var(--grass-green); border-top: 6px solid #4d6621; z-index: 20; }
+        .mario-dirt { position: absolute; bottom: 0; width: 100%; height: 40px; background: var(--dirt-brown); background-image: radial-gradient(#000 10%, transparent 10%); background-size: 15px 15px; }
+        .mario-pipe { position: fixed; bottom: 60px; left: 30px; width: 55px; height: 50px; background: #73C316; border: 5px solid #000; z-index: 15; }
+    </style>
+</head>
+<body>
+
+    <div class="mario-cloud" style="top: 100px; animation-delay: -10s;"></div>
+    <div class="mario-cloud" style="top: 220px; animation-delay: -30s;"></div>
+
+    <header class="header">
+        <h1>COMARADERIE '26<br>LEADERBOARD</h1>
+    </header>
+
+    <div class="podium-section" id="podium">
+        </div>
+
+    <div class="list-container">
+        <div class="list-inner-body" id="list-body">
+            </div>
+    </div>
+
+    <div class="mario-ground"><div class="mario-dirt"></div></div>
+    <div class="mario-pipe"></div>
+
+    <script>
+        const teamData = [
+            { name: "Coyyito", score: 1560 },
+            { name: "Team SCO21", score: 1420 },
+            { name: "Niam", score: 1210 },
+            { name: "Binary Beats", score: 1050 },
+            { name: "Syntax Errors", score: 920 },
+            { name: "Code Pros", score: 810 },
+            { name: "Null Pointer", score: 730 },
+            { name: "Logic Bomb", score: 600 },
+            { name: "Stack Star", score: 450 },
+            { name: "Git Gud", score: 320 }
+        ];
+
+        function render() {
+            const sorted = [...teamData].sort((a, b) => b.score - a.score);
+            const podium = document.getElementById('podium');
+            const list = document.getElementById('list-body');
+
+            // 领奖台渲染 (顺序: 2, 1, 3)
+            const pIdx = [1, 0, 2];
+            const pRanks = [2, 1, 3];
+            const pIcons = ["⭐", "🍄", "🟢"]; 
+
+            podium.innerHTML = '';
+            pIdx.forEach((idx, i) => {
+                const team = sorted[idx];
+                const r = pRanks[i];
+                podium.innerHTML += `
+                    <div class="podium-item rank-${r}">
+                        <div class="rank-top-badge">${r}</div>
+                        <div class="info-card">
+                            <span class="num-label">${r}</span>
+                            <span class="rank-tag">RANK</span>
+                            <div class="item-icon">${pIcons[i]}</div>
+                            <div class="group-name">${team.name}</div>
+                        </div>
+                        <div class="brick-pillar"></div>
+                    </div>
+                `;
+            });
+
+            // 列表渲染
+            list.innerHTML = '';
+            sorted.slice(3).forEach((team, i) => {
+                list.innerHTML += `
+                    <div class="row-entry">
+                        <span>${i + 4} &nbsp; ${team.name}</span>
+                        <span class="val-score">${team.score} score</span>
+                    </div>
+                `;
+            });
+        }
+        render();
+    </script>
+</body>
+</html>
