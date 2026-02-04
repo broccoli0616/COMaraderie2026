@@ -141,15 +141,15 @@
             { name: "Group A", score: 0},
             { name: "Group B", score: 0},
             { name: "Group C", score: 0 },
-            { name: "Group D", score: 12 },
-            { name: "Group E", score: 2 },
-            { name: "Group F", score: 0},
-            { name: "Group G", score: 6},
+            { name: "Group D", score: 24 },
+            { name: "Group E", score: 8 },
+            { name: "Group F", score: 8},
+            { name: "Group G", score: 10},
             { name: "Group H", score: 0 },
             { name: "Group I", score: 0 },
             { name: "Group J", score: 0 },
-            { name: "Group K", score: 16 },
-            { name: "Group L", score: 0 },
+            { name: "Group K", score: 20 },
+            { name: "Group L", score: 2},
             { name: "Group M", score: 6},
             { name: "Group N", score: 0 },
         ];
@@ -172,8 +172,9 @@
                     <div class="podium-item rank-${r}">
                         <div class="rank-top-badge">${r}</div>
                         <div class="info-card">
-                            <span class="num-label">${r}</span>
                             <span class="rank-tag">RANK</span>
+                            <span class="num-label">${r}</span>
+                            <span class="val-score">${team.score} score</span>
                             <div class="item-icon">${pIcons[i]}</div>
                             <div class="group-name">${team.name}</div>
                         </div>
